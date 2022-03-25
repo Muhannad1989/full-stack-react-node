@@ -50,6 +50,9 @@ const Machines = () => {
     return <div className="error">Oops something went wrong</div>;
   }
 
+
+  const
+
   // in case there is data
   return (
     <div className="container">
