@@ -1,23 +1,23 @@
 // import modules
-const express = require('express');
-const util = require('util');
-const mysql = require('mysql');
+const express = require("express");
+const util = require("util");
+const mysql = require("mysql");
 const app = express();
 
 app.use(express.json());
 
 // set database name in variable
-const databaseName = 'db';
+const databaseName = "testapp";
 
 // 'Help function' will run with each route we use
 
 function execute() {
   // database connection settings
   const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: databaseName,
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: databaseName
   });
   //****** change the 'password' and 'user' when you test the routs **********/
 
@@ -39,7 +39,8 @@ async function getTableByName(req, res) {
   try {
     await execQuery(`use ${databaseName}`);
     const selectedQuery = `select * from ${req.params.tableName}`;
-    // we can use calculation inside query, like calculate a colum or etc.. ( SELECT COUNT(values) FROM production ; )
+    // const selectedQuery = `select * from Tables`;
+    // we can use calculation inside query, like calculate a columns or etc.. ( SELECT COUNT(values) FROM production ; )
     const result = await execQuery(selectedQuery);
     res.status(200).send(result);
   } catch (err) {
@@ -90,16 +91,16 @@ async function getTemperature(req, res) {
 ///// our routes /////
 
 // get all production
-app.get('/production/total-production', getProduction);
+app.get("/production/total-production", getProduction);
 
 // get all scrap
-app.get('/production/total-scrap', getScrap);
+app.get("/production/total-scrap", getScrap);
 
 // get all temperature
-app.get('/production/temperature', getTemperature);
+app.get("/production/temperature", getTemperature);
 
 // get 'production' or 'runtime' tables
-app.get('/:tableName', getTableByName);
+app.get("/:tableName", getTableByName);
 
 // backend port
 const port = 5000;
@@ -114,5 +115,5 @@ app.listen(port, () => {
 
 // or //
 
-// you can use them at the front end with out writhing 'http://localhost:5000/' ('it's already done with the settings')
+// you can use them at the front and with out writhing 'http://localhost:5000/' ('it's already done with the settings')
 // Example:  fetch('/production/temperature')  &  using axios: axios.get('/production/temperature')
