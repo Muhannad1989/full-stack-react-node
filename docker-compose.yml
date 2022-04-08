@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      # MYSQL_PASSWORD: helloworld
+      MYSQL_DATABASE: testapp
+      MYSQL_HOST: localhost
+    ports:
+      - "3306:3306"
+    volumes:
+      - .:/var/lib/mysql
+
+  server:
+    build: ./
+    container_name: server
+    restart: always
+    volumes:
+      - .:/var/www/html
+
+    ports:
+      - "8080:8080"
+
+networks:
+  default:

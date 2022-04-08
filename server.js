@@ -35,12 +35,10 @@ const execQuery = execute();
 // end points //
 
 // get any table by name
-async function getTableByName(req, res) {
+async function getUsers(req, res) {
   try {
     await execQuery(`use ${databaseName}`);
     const selectedQuery = `select * from ${req.params.tableName}`;
-    // const selectedQuery = `select * from Tables`;
-    // we can use calculation inside query, like calculate a columns or etc.. ( SELECT COUNT(values) FROM production ; )
     const result = await execQuery(selectedQuery);
     res.status(200).send(result);
   } catch (err) {
@@ -49,61 +47,25 @@ async function getTableByName(req, res) {
   res.end();
 }
 
-// get Scraps
-async function getScrap(req, res) {
+async function getUserById(req, res) {
+  const { id, tableName } = req.params;
   try {
     await execQuery(`use ${databaseName}`);
-    const selectedQuery = `select * from production where variable_name = 'scrap'`;
-    const result = await execQuery(selectedQuery);
-    res.status(200).send(result);
+    const selectedQuery = `select * from ${tableName} WHERE id = ${id}`;
+    const user = await execQuery(selectedQuery);
+    res.status(200).send(user);
   } catch (err) {
     res.status(404).send({ Error: err });
   }
   res.end();
 }
-
-// get Productions
-async function getProduction(req, res) {
-  try {
-    await execQuery(`use ${databaseName}`);
-    const selectedQuery = `select * from production where variable_name = 'production'`;
-    const result = await execQuery(selectedQuery);
-    res.status(200).send(result);
-  } catch (err) {
-    res.status(404).send({ Error: err });
-  }
-  res.end();
-}
-
-// get Temperature
-async function getTemperature(req, res) {
-  try {
-    await execQuery(`use ${databaseName}`);
-    const selectedQuery = `select * from production where variable_name = 'core temperature'`;
-    const result = await execQuery(selectedQuery);
-    res.status(200).send(result);
-  } catch (err) {
-    res.status(404).send({ Error: err });
-  }
-  res.end();
-}
-
-///// our routes /////
-
-// get all production
-app.get("/production/total-production", getProduction);
-
-// get all scrap
-app.get("/production/total-scrap", getScrap);
-
-// get all temperature
-app.get("/production/temperature", getTemperature);
 
 // get 'production' or 'runtime' tables
-app.get("/:tableName", getTableByName);
+app.get("/:tableName", getUsers);
+app.get("/:tableName/:id", getUserById);
 
 // backend port
-const port = 5000;
+const port = 6000;
 
 // listening to port
 app.listen(port, () => {
@@ -111,9 +73,9 @@ app.listen(port, () => {
 });
 
 // you can test/use those routes with postman or try them in browser url
-// Example:  http://localhost:5000/production and use it with out
+// Example:  http://localhost:6000/production and use it with out
 
 // or //
 
-// you can use them at the front and with out writhing 'http://localhost:5000/' ('it's already done with the settings')
+// you can use them at the front and with out writhing 'http://localhost:6000/' ('it's already done with the settings')
 // Example:  fetch('/production/temperature')  &  using axios: axios.get('/production/temperature')
