@@ -72,10 +72,9 @@ app.listen(port, () => {
   console.log(`listening to port ${port}`);
 });
 
-// you can test/use those routes with postman or try them in browser url
-// Example:  http://localhost:6000/production and use it with out
+// you can test/use those routes with postman or try them in your browser url
+// Example:  http://localhost:6000/users and use it with out
 
 // or //
 
 // you can use them at the front and with out writhing 'http://localhost:6000/' ('it's already done with the settings')
-// Example:  fetch('/production/temperature')  &  using axios: axios.get('/production/temperature')
