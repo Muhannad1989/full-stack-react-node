@@ -20,4 +20,4 @@ To test the routs use the flowing links:
 
 The frontend run on http://localhost:3000/
 
-The backend run on http://localhost:6000/users
+The backend run on http://localhost:6000
